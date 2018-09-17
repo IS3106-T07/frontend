@@ -1,5 +1,48 @@
-# Frontend Setup
-> Instructions to install dependencies and run frontend development environment.
+##Project Structure
+
+src/
+├── App
+│   ├── App.jsx
+│   └── index.js
+├── HomePage
+│   ├── HomePage.jsx
+│   └── index.js
+├── LoginPage
+│   ├── LoginPage.jsx
+│   └── index.js
+├── RegisterPage
+│   ├── RegisterPage.jsx
+│   └── index.js
+├── _actions
+│   ├── alert.actions.js
+│   ├── index.js
+│   └── user.actions.js
+├── _components
+│   ├── PrivateRoute.jsx
+│   └── index.js
+├── _constants
+│   ├── alert.constants.js
+│   ├── index.js
+│   └── user.constants.js
+├── _helpers
+│   ├── auth-header.js
+│   ├── fake-backend.js
+│   ├── history.js
+│   ├── index.js
+│   └── store.js
+├── _reducers
+│   ├── alert.reducer.js
+│   ├── authentication.reducer.js
+│   ├── index.js
+│   ├── registration.reducer.js
+│   └── users.reducer.js
+├── _services
+│   ├── index.js
+│   └── user.service.js
+├── index.html
+└── index.jsx
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ### Directory
     .
