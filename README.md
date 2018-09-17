@@ -1,18 +1,6 @@
 ##Project Structure
-
+```
 src/
-├── App
-│   ├── App.jsx
-│   └── index.js
-├── HomePage
-│   ├── HomePage.jsx
-│   └── index.js
-├── LoginPage
-│   ├── LoginPage.jsx
-│   └── index.js
-├── RegisterPage
-│   ├── RegisterPage.jsx
-│   └── index.js
 ├── _actions
 │   ├── alert.actions.js
 │   ├── index.js
@@ -39,8 +27,24 @@ src/
 ├── _services
 │   ├── index.js
 │   └── user.service.js
+├── App
+│   ├── App.jsx
+│   └── index.js
+├── HomePage
+│   ├── HomePage.jsx
+│   └── index.js
+├── LoginPage
+│   ├── LoginPage.jsx
+│   └── index.js
+├── RegisterPage
+│   ├── RegisterPage.jsx
+│   └── index.js
+├── AnotherFeature
+│   ├── AnotherFeature.jsx
+│   └── index.js
 ├── index.html
 └── index.jsx
+```
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
