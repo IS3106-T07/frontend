@@ -19,6 +19,7 @@ class LoginPage extends React.Component {
             submitted: false
         };
 
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -42,11 +43,13 @@ class LoginPage extends React.Component {
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
-        return (
+        return ( //TODO: resize the logo
             <div className="col-md-6 col-md-offset-3" align='center'>
 
                 <p >Welcome To Qoodie</p>
+                <img src='../../img/logo_background.png' />
                 <h2>Login</h2>
+
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>

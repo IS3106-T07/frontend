@@ -10,10 +10,11 @@ class RegisterPage extends React.Component {
 
         this.state = {
             user: {
-                firstName: '',
-                lastName: '',
-                username: '',
-                password: ''
+                name: '',
+                email: '',
+                password: '',
+                phone:'',
+                role:'student', //TODO: modify the render function
             },
             submitted: false
         };

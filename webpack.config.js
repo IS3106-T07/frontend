@@ -23,7 +23,15 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader:[ 'style-loader', 'css-loader' ]
-            }
+            },
+            {
+                test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+                use: [
+                    {
+                        loader: 'url-loader'
+                    },
+                ]
+            },
         ]
     },
     plugins: [new HtmlWebpackPlugin({
