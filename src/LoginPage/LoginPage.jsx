@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../_actions';
 
+import './login.css';
+
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
@@ -41,7 +43,9 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div className="col-md-6 col-md-offset-3" align='center'>
+
+                <p >Welcome To Qoodie</p>
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
