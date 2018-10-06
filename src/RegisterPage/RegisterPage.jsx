@@ -11,9 +11,9 @@ class RegisterPage extends React.Component {
         this.state = {
             user: {
                 name: '',
-                email: '',
-                password: '',
-                phone:'',
+                email:'',
+                password:'',
+                phone:''
                 // role:'student', //TODO: commented while waiting for backend to change incoming json format
             },
             submitted: false
@@ -40,7 +40,7 @@ class RegisterPage extends React.Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.username && user.password) {
+        if (user.name && user.email && user.password && user.phone) {
             dispatch(userActions.register(user));
         }
     }
@@ -53,7 +53,7 @@ class RegisterPage extends React.Component {
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !user.name ? ' has-error' : '')}>
-                        <label htmlFor="firstName">Name</label>
+                        <label htmlFor="name">Name</label>
                         <input type="text" className="form-control" name="name" value={user.name} onChange={this.handleChange} />
                         {submitted && !user.name &&
                             <div className="help-block">Name is required</div>
