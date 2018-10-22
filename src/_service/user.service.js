@@ -1,4 +1,5 @@
-import config from 'config';
+// process.env.NODE_CONFIG_DIR = './'
+// import config from 'config';
 import { authHeader } from '../_helpers';
 
 export const userService = {
@@ -11,6 +12,8 @@ export const userService = {
     delete: _delete
 };
 
+const apiUrl = 'http://localhost:3000';
+
 function login(email, password) {
     const requestOptions = {
         "Access-Control-Allow-Origin": "*",
@@ -19,7 +22,7 @@ function login(email, password) {
         body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/signin`, requestOptions)
+    return fetch(`${apiUrl}/signin`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -43,7 +46,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -52,7 +55,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -62,7 +65,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/signup`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/signup`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -72,7 +75,11 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
+<<<<<<< HEAD:src/_service/user.service.js
     return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+=======
+    return fetch(`${apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+>>>>>>> Update to react-scripts@2.0, cra-v2 and other required structuing:src/_services/user.service.js
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -82,7 +89,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -95,7 +102,7 @@ function handleResponse(response) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
-                location.reload(true);
+                window.location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;

@@ -1,7 +1,8 @@
 p {
     color: #cb9d1e;
 }
-a:link {
+button {
+    margin: 5px;
     color: #cb9d1e;
 }
 
