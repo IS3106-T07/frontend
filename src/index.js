@@ -1,12 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from './_helpers';
-import { App } from './App';
-import * as serviceWorker from './serviceWorker';
-
+import { store } from './helpers';
+import { App } from './components/App';
+import * as serviceWorker from './helpers';
 // setup fake backend
-import { configureFakeBackend } from './_helpers';
+import { configureFakeBackend } from './helpers';
+
+export const apiUrl = 'http://localhost:3000';
 
 configureFakeBackend();
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import { userActions } from '../actions';
 
-import './login.module.css';
-import logo from '../img/logo_background.png';
+import './css/login.module.css';
+import logo from '../resources/logo_background.png';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -48,20 +48,20 @@ class LoginPage extends React.Component {
             <div className="col-md-6 col-md-offset-3" align='center'>
 
                 <p >Welcome To Qoodie</p>
-                <img src={logo} alt='Qoodie logo'/>
+                        <img src={logo} alt="Qoodie logo" className="img-responsive" />
                 <h2>Login</h2>
 
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
-                        <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                        {/* <label htmlFor="email">Email</label> */}
+                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} placeholder="Email" />
                         {submitted && !email &&
                             <div className="help-block">Email is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
+                        {/* <label htmlFor="password">Password</label> */}
+                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} placeholder="Password" />
                         {submitted && !password &&
                         <div className="help-block">Password is required</div>
                         }

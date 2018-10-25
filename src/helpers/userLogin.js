@@ -1,6 +1,7 @@
 // process.env.NODE_CONFIG_DIR = './'
 // import config from 'config';
-import { authHeader } from '../_helpers';
+import { authHeader } from '.';
+import { apiUrl } from '../index';
 
 export const userService = {
     login,
@@ -11,8 +12,6 @@ export const userService = {
     update,
     delete: _delete
 };
-
-const apiUrl = 'http://localhost:3000';
 
 function login(email, password) {
     const requestOptions = {
