@@ -1,0 +1,30 @@
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css';
+
+p {
+    color: #cb9d1e;
+}
+button {
+    margin: 5px;
+    color: #cb9d1e;
+}
+
+input.details {
+    border: 0;
+    outline: 0;
+    border-color : #fdfcf7;
+    background: transparent;
+    border-bottom: 2px solid #cb9d1e ;
+}
+input.submit{
+    background: #E8E8E8;
+    padding: 0.7em;
+    width: 30%;
+    border: 0;
+    color: #cb9d1e;
+    border-radius: 25px;
+}
+::placeholder {
+    color: #cb9d1e;
+    opacity: 1;
+
+}
