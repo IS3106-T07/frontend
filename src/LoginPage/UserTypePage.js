@@ -9,13 +9,6 @@ class UserTypePage extends React.Component {
   render() {
     return (
       <div className="col-md-6 col-md-offset-3" align="center">
-        <img
-          alt="Qoodie"
-          src="../../img/logo_background.png"
-          style={{
-            width: '100%',
-          }}
-        />
         <Typography
           variant="h2"
           style={{
@@ -49,7 +42,7 @@ class UserTypePage extends React.Component {
               style={{
                 color: '#CB9D1B',
               }}
-            >Student
+            >Buyer
             </Typography>
           </Button>
           <Button
@@ -74,7 +67,7 @@ class UserTypePage extends React.Component {
               style={{
                 color: '#CB9D1B',
               }}
-            >Vendor
+            >Seller
             </Typography>
           </Button>
         </div>

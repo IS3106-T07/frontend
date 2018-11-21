@@ -4,6 +4,7 @@ import { authHeader } from '../_helpers';
 import {
     generateToken
 } from '../_helpers/authorization';
+import { handleUpdateResponse, handleCreateResponse } from '../_helpers/handleResponse';
 
 export const userService = {
     login,
@@ -16,32 +17,30 @@ export const userService = {
 };
 
 function login(email, password) {
+  const user = {
+    email: email,
+    password: password
+  };
 
-  const token = generateToken(email, password);
-  console.log(`*********token:\n${token}`);
-    const requestOptions = {
-        // "Access-Control-Allow-Origin": "*",
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-        }
-    };
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user)
+  };
 
-    return fetch(`${config.apiUrl}/Resource/customers/login`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // login successful if there's a jwt token in the response
-            user.token = token;
-            console.log(user);
-            console.log(`#########\n${user.name}`);
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+  return fetch(`${config.apiUrl}/webresources/customers/login`, requestOptions)
+    .then(handleResponse)
+    .then(user => {
+      console.log('#######');
+      console.log(JSON.stringify(user, undefined, 2));
 
-            return user;
-        });
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      localStorage.setItem('user', JSON.stringify(user));
 
-
+      return user;
+    });
 }
 
 function logout() {
@@ -52,10 +51,16 @@ function logout() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/webresources/customers`, requestOptions)
+      .then(handleResponse)
+      .then(
+        users => {
+            console.log(JSON.stringify(users,undefined,2));
+            return users;
+        }
+      );
 }
 
 function getById(id) {
@@ -68,13 +73,22 @@ function getById(id) {
 }
 
 function register(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch(`${config.apiUrl}/signup`, requestOptions).then(handleResponse);
+  fetch(`${config.apiUrl}/webresources/customers`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({email:user.email, password:user.password, active:true, userType:user.userType})
+  })
+    .then(handleCreateResponse)
+    .then(
+      user => {
+        console.log(JSON.stringify(user, undefined, 2));
+        localStorage.clear();
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+    )
 }
 
 function update(user) {
@@ -99,15 +113,9 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
-        console.log(`***********\n${text}`);
-        // const text_formated ='{ "message": "'+ text + '"}';
-        // const data = text && JSON.parse(text_formated);
-        // console.log( '{ "message": "'+ text +
-        //     '"}');
         if (!response.ok) {
             console.log("OK OK");
             if (response.status === 401) {
-                // auto logout if 401 response returned from api
                 logout();
                 location.reload(true);
             }

@@ -4,22 +4,26 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button/Button';
-import { userActions } from '../_actions';
 import { userService } from '../_services'
+import config from 'config';
+import { handleCreateItemResponse } from '../_helpers/handleResponse';
 import {history} from '../_helpers';
 
-class RegisterPage extends React.Component {
+class CreateItem extends React.Component {
   constructor(props) {
     super(props);
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(JSON.stringify(user,undefined,2));
     this.state = {
-      user: {
-        name: '',
-        email: '',
-        password: '',
-        userType:'buyer',
-      },
+      user: user,
       submitted: false,
+      item:{
+        sellerId: user.id,
+        sellerEmail: user.email,
+        name: '',
+        price: '',
+        status: 'active'
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,10 +32,10 @@ class RegisterPage extends React.Component {
 
   handleChange(event) {
     const { name, value } = event.target;
-    const { user } = this.state;
+    const { item } = this.state;
     this.setState({
-      user: {
-        ...user,
+      item: {
+        ...item,
         [name]: value,
       },
     });
@@ -41,19 +45,29 @@ class RegisterPage extends React.Component {
     event.preventDefault();
 
     this.setState({ submitted: true });
-    const { user } = this.state;
-    const { dispatch } = this.props;
-    if (user.email && user.password) {
-      // dispatch(userActions.register(user));
-      userService.register(user);
+    const { item } = this.state;
+    if (item.name && item.price) {
+      fetch(`${config.apiUrl}/webresources/customers/item/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sellerId: this.state.user.id,
+          sellerEmail: this.state.user.email,
+          name: this.state.item.name,
+          price: this.state.item.price,
+          status: 'active'
+        })
+      })
+        .then(handleCreateItemResponse);
+      history.push('/homepage/seller');
     }
-
-    history.push('/login');
   }
 
   render() {
     const { registering } = this.props;
-    const { user, submitted } = this.state;
+    const { user, submitted, item } = this.state;
     return (
       <div className="container-fluid">
         <div
@@ -65,22 +79,18 @@ class RegisterPage extends React.Component {
         <form name="form" onSubmit={this.handleSubmit}>
 
 
-          <div className={`form-group${submitted && !user.email ? ' has-error' : ''}`}>
-            <label htmlFor="email">Email</label>
-            <input type="text" className="form-control" name="email" value={user.email}
+          <div className="form-group">
+            <label htmlFor="name">Item Name</label>
+            <input type="text" className="form-control" name="name" value={item.name}
                    onChange={this.handleChange}/>
-            {submitted && !user.email
-            && <div className="help-block">Email is required</div>
-            }
           </div>
-          <div className={`form-group${submitted && !user.password ? ' has-error' : ''}`}>
-            <label htmlFor="password">Password</label>
-            <input type="password" className="form-control" name="password" value={user.password}
+
+          <div className="form-group">
+            <label htmlFor="price">Item Price</label>
+            <input type="text" className="form-control" name="price" value={item.price}
                    onChange={this.handleChange}/>
-            {submitted && !user.password
-            && <div className="help-block">Password is required</div>
-            }
           </div>
+
           <div
             className="form-group"
             style={{
@@ -100,7 +110,7 @@ class RegisterPage extends React.Component {
                   this.handleSubmit(e)
                 }}
               >
-                Start Ordering
+                Create Item
               </Button>
             </div>
             <div>
@@ -116,12 +126,6 @@ class RegisterPage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { registering } = state.registration;
-  return {
-    registering,
-  };
-}
 
-const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
-export { connectedRegisterPage as RegisterPage };
+const connectedRegisterPage = connect()(CreateItem);
+export { connectedRegisterPage as CreateItem };

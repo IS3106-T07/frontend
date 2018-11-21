@@ -10,9 +10,10 @@ const styles = {
     backgroundColor: '#CB9D1B',
     position: 'relative',
   },
-  logo: {
+  title: {
     width: '100%',
     textAlign: 'center',
+    fontSize:20
   },
   profile: {
     position: 'absolute',
@@ -34,8 +35,8 @@ function TopBar(props) {
     <div>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <div className={classes.logo}>
-            <img alt="Qoodie" className="logo" src="../../../img/grey2.png" />
+          <div className={classes.title}>
+            Assignment 2
           </div>
           <div className={classes.profile}>
             <ProfileIcon />

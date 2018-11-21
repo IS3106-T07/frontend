@@ -44,13 +44,11 @@ module.exports = {
   })],
   devServer: {
     historyApiFallback: true,
-    host: '172.19.195.190',
-    port: 3000,
   },
   externals: {
     // global app config object
     config: JSON.stringify({
-      apiUrl: 'http://localhost:8080/Qoodie-war',
+      apiUrl: 'http://localhost:8080/CRM-war',
     }),
   },
 };

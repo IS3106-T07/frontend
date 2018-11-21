@@ -8,13 +8,19 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Link from 'react-router-dom/es/Link';
-import ProfileCard from './ProfileCard';
 import { SET_CURRENT_PAGE } from '../App/index';
+import { handleUpdateResponse } from '../_helpers/handleResponse';
+import config from 'config';
 
 export const UPDATE_PROFILE_DETAILS = 'UPDATE_PROFILE_DETAILS';
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(JSON.stringify(user, undefined, 2));
+    this.state = {
+      user: user,
+    }
   }
 
 
@@ -43,18 +49,19 @@ class ProfilePage extends React.Component {
     const { matric, cardDetail } = this.state;
 
     const updateField = (e) => {
-      dispatch({
-        type: UPDATE_PROFILE_DETAILS,
-        data: {
-          [e.target.name]: e.target.value,
-        },
+      this.setState({
+        user: {
+          ...this.state.user,
+          password: e.target.value
+        }
       });
+
     };
+
 
     return (
       <div className={classes.container}>
-        <div>
-          <ProfileCard />
+        <div style={{marginTop:20}}>
           <Typography
             variant="h3"
             component="h3"
@@ -62,7 +69,7 @@ class ProfilePage extends React.Component {
               marginTop: 10,
             }}
           >
-            Michael Lee
+            {this.state.user.email}
           </Typography>
         </div>
         <div style={{
@@ -71,29 +78,14 @@ class ProfilePage extends React.Component {
         >
           <Grid container spacing={0} className={classes.grid}>
             <Grid item xs={6}>
-              Matriculation No.
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                // value={matric}
-                defaultValue={matric}
-                name="matric"
-                onBlur={updateField}
-                InputProps={{
-                  style: {
-                    fontSize: 16,
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              Card Details
+              Password
             </Grid>
             <Grid item xs={6}>
               <TextField
                 // value={cardDetail}
-                defaultValue={cardDetail}
-                name="cardDetail"
+                value={this.state.user.password}
+                onChange={updateField}
+                name="password"
                 onBlur={updateField}
                 InputProps={{
                   style: {
@@ -128,7 +120,21 @@ class ProfilePage extends React.Component {
                   width: 150,
                   color: 'floralWhite',
                 }}
-                onClick={() => history.back()}
+                onClick={() => {
+                  localStorage.clear();
+                  localStorage.setItem('user', JSON.stringify(this.state.user));
+                  console.log(`updated user: \n${JSON.stringify(this.state.user, undefined, 2)}`);
+                  fetch(`${config.apiUrl}/webresources/customers/update`, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({email: this.state.user.email, password: this.state.user.password})
+                  })
+                    .then(handleUpdateResponse);
+
+                  history.back()
+                }}
               >
                 Update
               </Button>

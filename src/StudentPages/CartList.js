@@ -70,9 +70,11 @@ function CartList(props) {
               {/*<OrderConfirmationDialog total={total} orderId={orderId} data={data}/>*/}
             {/*</div>*/}
           {/*</div>*/}
-          {orders?orders.map(function(order, key) {
-            return (<FoodItem key={key} data={order} total={totalPrice} orderId={orderId} />)
-          }):''}
+          {
+            orders?orders.map(function(order, key) {
+              return (<FoodItem key={key} data={order} total={totalPrice} orderId={orderId} />)
+            }):''
+          }
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

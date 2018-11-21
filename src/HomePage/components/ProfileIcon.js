@@ -43,7 +43,7 @@ class ProfileIcon extends React.Component {
         component={StyledLink}
         to="/homepage/profile"
       >
-        <img alt="Adelle Charles" className="logo" src="https://www.morpht.com/sites/morpht/files/styles/landscape_medium/public/dalibor-matura_1.jpg?itok=Wskh0jNP" />
+        <img alt="profile" className="logo" src="../../../img/profileLogo.png" />
       </Avatar>
     );
   }
