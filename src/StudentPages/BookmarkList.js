@@ -1,21 +1,21 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import RemoveIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
-import { compose } from "redux";
-import connect from "react-redux/es/connect/connect";
-import BookmarkStores from "./BookmarkStores";
-import { REMOVE_BOOKMARK } from "../_reducers/userProfile.reducer";
-import { history } from "../_helpers";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import RemoveIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import { compose } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import BookmarkStores from './BookmarkStores';
+import { REMOVE_BOOKMARK } from '../_reducers/userProfile.reducer';
+import { history } from '../_helpers';
 
 const styles = theme => ({
   root: {
     width: 365,
-    backgroundColor: theme.palette.background.paper
-  }
+    backgroundColor: theme.palette.background.paper,
+  },
 });
 
 class BookmarkList extends React.Component {
@@ -24,7 +24,7 @@ class BookmarkList extends React.Component {
     e.stopPropagation();
     dispatch({
       type: REMOVE_BOOKMARK,
-      bookmark: bookmark.filter(b => b.id !== id)
+      bookmark: bookmark.filter(b => b.id !== id),
     });
   };
 
@@ -36,8 +36,7 @@ class BookmarkList extends React.Component {
           {bookmark.map((b, index) => (
             <ListItem
               key={b.id}
-              onClick={() =>
-                history.push(`/homepage/menu/${b.canteen}/${b.id}`)
+              onClick={() => history.push(`/homepage/menu/${b.canteen}/${b.id}`)
               }
             >
               <BookmarkStores key={b.id} store={b} />
@@ -59,7 +58,7 @@ class BookmarkList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  bookmark: state.userProfile.bookmark
+  bookmark: state.userProfile.bookmark,
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });
@@ -67,7 +66,7 @@ const mapDispatchToProps = dispatch => ({ dispatch });
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
-  withStyles(styles)
+  withStyles(styles),
 )(BookmarkList);

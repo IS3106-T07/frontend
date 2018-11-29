@@ -1,9 +1,12 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { compose } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import { convertDateTime } from '../../../_commons/convertTimeToString';
+import { SET_CALENDAR_TIMES } from '../../../_reducers/vendorOrders.reducer';
 
 const styles = theme => ({
   container: {
@@ -20,18 +23,38 @@ const styles = theme => ({
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      startDate: '2018-11-20',
-      endDate: '2018-11-27',
-    };
+    this.state = {};
+  }
+
+  componentWillMount() {
+    const { startDate, endDate } = this.props;
+    console.log(convertDateTime(startDate, true));
+    console.log(convertDateTime(endDate, true));
+    this.setState({
+      startDate: convertDateTime(startDate, true),
+      endDate: convertDateTime(endDate, true),
+    });
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, dispatch } = this.props;
     const { startDate, endDate } = this.state;
-    const handleChange = e => this.setState({
-      [e.target.name]: e.target.value,
-    });
+    const handleChange = (e) => {
+      const field = e.target.name;
+      const val = e.target.value;
+      const checkedStartDate = convertDateTime(Math.min(new Date(endDate).getTime(), new Date(val).getTime()), true);
+      const checkedEndDate = convertDateTime(Math.max(new Date(startDate).getTime(), new Date(val).getTime()), true);
+      const value = field === 'endDate' ? checkedEndDate : checkedStartDate;
+      this.setState({
+        [field]: value,
+      }, () => dispatch({
+        type: SET_CALENDAR_TIMES,
+        data: {
+          startDate: new Date(this.state.startDate).getTime(),
+          endDate: new Date(this.state.endDate).getTime(),
+        },
+      }));
+    };
     return (
       <form className={classes.container} noValidate>
         <TextField
@@ -102,4 +125,11 @@ class Calendar extends React.Component {
   }
 }
 
-export default withStyles(styles)(Calendar);
+const mapStateToProps = state => ({
+  startDate: state.vendorOrders.startDate,
+  endDate: state.vendorOrders.endDate,
+});
+
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(styles))(Calendar);

@@ -1,30 +1,30 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import VendorSwitch from "./VendorSwitch";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import VendorSwitch from './VendorSwitch';
 
 const styles = {
   appBar: {
-    backgroundColor: "#DAA520",
-    position: "relative"
+    backgroundColor: '#DAA520',
+    position: 'relative',
   },
   logo: {
-    width: "100%",
-    textAlign: "center"
+    width: '100%',
+    textAlign: 'center',
   },
   profile: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
-    right: 0
+    right: 0,
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 };
 
 function TopBar(props) {

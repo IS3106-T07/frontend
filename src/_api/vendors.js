@@ -71,6 +71,12 @@ const setOrderToReady = orderId => api
     { params: { orderId, storeId: parseFloat(JSON.parse(localStorage.getItem('store')).storeId) } },
   );
 
+const toggleStatus = () => api
+  .get(
+    'toggleStatus',
+    { params: { storeId: parseFloat(JSON.parse(localStorage.getItem('store')).storeId) } },
+  );
+
 export default {
   createVendor,
   updateItem,
@@ -81,4 +87,5 @@ export default {
   getAllDishTypes,
   getVendorOrders,
   setOrderToReady,
+  toggleStatus,
 };

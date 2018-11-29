@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography/Typography';
 import VendorRevenueDetails from './VendorRevenueDetails';
-import Typography from "@material-ui/core/Typography/Typography";
 
 
 const styles = theme => ({
@@ -33,9 +32,5 @@ function VendorRevenueHistoryList(props) {
     </div>
   );
 }
-
-VendorRevenueHistoryList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(VendorRevenueHistoryList);

@@ -12,6 +12,8 @@ import VendorBottomBar from '../HomePage/components/VendorBottomBar';
 import CanteenPage from '../StudentPages/CanteenPage';
 import api from '../_api/vendors';
 import ErrorDialog from '../_commons/ErrorDialog';
+import StudentOrderPage from "../StudentPages/StudentOrderPage";
+import CanteenStorePage from "../StudentPages/CanteenStorePage";
 
 class VendorPages extends React.Component {
   componentWillMount() {
@@ -43,6 +45,16 @@ class VendorPages extends React.Component {
             overflow: 'scroll',
           }}
           >
+            <Route
+              exact
+              path="/vendor/menu/:cId/:sId"
+              component={StudentOrderPage}
+            />
+            <Route
+              exact
+              path="/vendor/store/:id"
+              component={CanteenStorePage}
+            />
             <Route exact path="/vendor/canteen" component={CanteenPage} />
             <Route exact path="/vendor/menu" component={VendorMenuPage} />
             <Route exact path="/vendor/vendorHistory" component={VendorHistoryPage} />
