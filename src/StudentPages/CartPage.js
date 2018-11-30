@@ -40,11 +40,14 @@ class CartPage extends Component {
         </Typography>
         {cart.length === 0 ? (
           <Typography
-            variant="h3"
+            variant="h4"
             align="center"
             style={{
               color: "gray",
-              margin: 20
+              width: "100vw",
+              textAlign: "center",
+              lineHeight: "50vh",
+              verticalAlign: "middle"
             }}
           >
             Seems a little empty around here

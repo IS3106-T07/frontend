@@ -1,21 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Router, Route } from 'react-router-dom';
-import TopBar from './components/TopBar';
-import BottomBar from './components/BottomBar';
-import './css/HomePage.css';
-import ProfilePage from '../ProfilePage/ProfilePage';
-import { history } from '../_helpers';
-import CanteenPage from '../StudentPages/CanteenPage';
-import StudentOrderPage from '../StudentPages/StudentOrderPage';
-import CanteenStorePage from '../StudentPages/CanteenStorePage';
-import CartPage from '../StudentPages/CartPage';
-import TrackOrderPage from '../StudentPages/TrackOrderPage';
-import BookmarkPage from '../StudentPages/BookmarkPage';
-import customerApi from '../_api/customers';
-import ErrorDialog from '../_commons/ErrorDialog';
-import { GET_USER_ORDERS_SUCCESS } from '../_reducers/userProfile.reducer';
-import { canteenActions } from '../_actions';
+import React from "react";
+import { connect } from "react-redux";
+import { Router, Route } from "react-router-dom";
+import TopBar from "./components/TopBar";
+import BottomBar from "./components/BottomBar";
+import "./css/HomePage.css";
+import ProfilePage from "../ProfilePage/ProfilePage";
+import { history } from "../_helpers";
+import CanteenPage from "../StudentPages/CanteenPage";
+import StudentOrderPage from "../StudentPages/StudentOrderPage";
+import CanteenStorePage from "../StudentPages/CanteenStorePage";
+import CartPage from "../StudentPages/CartPage";
+import TrackOrderPage from "../StudentPages/TrackOrderPage";
+import BookmarkPage from "../StudentPages/BookmarkPage";
+import customerApi from "../_api/customers";
+import ErrorDialog from "../_commons/ErrorDialog";
+import { GET_USER_ORDERS_SUCCESS } from "../_reducers/userProfile.reducer";
+import { canteenActions } from "../_actions";
 
 class HomePage extends React.Component {
   componentWillMount() {
@@ -28,18 +28,18 @@ class HomePage extends React.Component {
     dispatch(canteenActions.getAllCanteens());
     customerApi
       .orders()
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: GET_USER_ORDERS_SUCCESS,
           orders: response.data.filter(
-            o => o.customerOrderType.name !== 'IN BASKET',
+            o => o.customerOrderType.name !== "IN BASKET"
           ),
           cart: response.data.filter(
-            o => o.customerOrderType.name === 'IN BASKET',
-          ),
+            o => o.customerOrderType.name === "IN BASKET"
+          )
         });
       })
-      .catch(error => ErrorDialog('retrieving orders', error));
+      .catch(error => ErrorDialog("retrieving orders", error));
   };
 
   render() {
@@ -47,10 +47,12 @@ class HomePage extends React.Component {
     return (
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100vw',
-          height: '100vh',
+          display: "flex",
+          flexDirection: "column",
+          width: "100vw",
+          height: "100vh",
+          overflowY: "scroll" /* has to be scroll, not auto */,
+          WebkitOverflowScrolling: "touch"
         }}
       >
         <TopBar />
@@ -58,8 +60,8 @@ class HomePage extends React.Component {
           <main
             style={{
               flex: 1,
-              display: 'flex',
-              overflow: 'scroll',
+              display: "flex",
+              overflow: "scroll"
             }}
           >
             <Route exact path="/homepage/profile" component={ProfilePage} />
@@ -94,4 +96,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({ dispatch });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);

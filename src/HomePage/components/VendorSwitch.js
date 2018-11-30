@@ -14,11 +14,11 @@ import { GET_VENDOR_DETAILS_SUCCESS } from "../../VendorPages/VendorMenu/VendorM
 
 const styles = theme => ({
   colorSwitchBase: {
-    color: "purple[300]",
+    color: "red",
     "&$colorChecked": {
-      color: "purple[500]",
+      color: "red",
       "& + $colorBar": {
-        backgroundColor: "purple[500]"
+        backgroundColor: "red"
       }
     }
   },
@@ -50,8 +50,8 @@ const styles = theme => ({
     marginTop: -13,
     marginLeft: -21,
     border: "solid 1px",
-    borderColor: theme.palette.grey[400],
-    backgroundColor: theme.palette.grey[50],
+    borderColor: "#ff3b30",
+    backgroundColor: "#ff3b30",
     opacity: 1,
     transition: theme.transitions.create(["background-color", "border"])
   },
