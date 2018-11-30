@@ -12,12 +12,18 @@ import TotalAmount from "./components/TotalAmount";
 
 const styles = theme => ({
   root: {
-    width: 375,
+    width: "100vw",
     paddingTop: 5
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular
+  },
+  details: {
+    alignItems: "center"
+  },
+  column: {
+    flexBasis: "100%"
   }
 });
 
@@ -42,8 +48,8 @@ function CartList(props) {
       od.dish.store.name;
     return true;
   });
-  console.log("TEST");
-  console.log(canteens);
+  console.log("CANTEENS");
+  console.table(canteens);
   const total = orderDishes
     .map(od => od.dish.price * od.amount)
     .reduce((a, b) => a + b, 0);
@@ -51,22 +57,23 @@ function CartList(props) {
     style: "currency",
     currency: "SGD"
   }).format(total);
+
   return (
     <div className={classes.root}>
       <div>
         {Object.keys(canteens)
           .sort()
           .map((k, index) => {
-            const length = 7;
-            const l = 9;
+            const storeNameLength = 15;
+            const canteenNameLength = 10;
             const { canteenName, storeName, orderDishes: ods } = canteens[k];
             const trimmedCanteenName =
-              canteenName.length > l
-                ? `${canteenName.substring(0, l - 3)}...`
+              canteenName.length > canteenNameLength
+                ? `${canteenName.substring(0, canteenNameLength - 3)}..`
                 : canteenName;
             const trimmedDishName =
-              storeName.length > length
-                ? `${storeName.substring(0, length - 3)}...`
+              storeName.length > storeNameLength
+                ? `${storeName.substring(0, storeNameLength - 3)}..`
                 : storeName;
             const t = ods
               .map(od => od.dish.price * od.amount)
@@ -82,33 +89,42 @@ function CartList(props) {
                   className={classes.heading}
                   expandIcon={<ExpandMoreIcon key={canteens[k].id} />}
                 >
-                  <Typography
-                    key={canteens[k].id}
-                    style={{
-                      fontSize: 20
-                    }}
-                  >
-                    {trimmedCanteenName || "canteenName"}
-                    :&nbsp;
-                  </Typography>
-                  <Typography
-                    key={canteens[k].id}
-                    style={{
-                      paddingLeft: 5,
-                      fontSize: 20
-                    }}
-                  >
-                    {trimmedDishName || "storeName"}
-                  </Typography>
-                  <Typography
-                    key={canteens[k].id}
-                    style={{
-                      marginLeft: 18,
-                      fontSize: 20
-                    }}
-                  >
-                    {oPrice}
-                  </Typography>
+                  <div className="col-xs-4">
+                    <Typography
+                      align="left"
+                      key={canteens[k].id}
+                      style={{
+                        width: "20vw",
+                        textAlign: "left",
+                        fontSize: 15
+                      }}
+                    >
+                      {trimmedCanteenName || "canteenName"}:
+                    </Typography>
+                  </div>
+                  <div className="col-xs-6">
+                    <Typography
+                      align="left"
+                      key={canteens[k].id}
+                      style={{
+                        width: "40vw",
+                        fontSize: 15
+                      }}
+                    >
+                      {trimmedDishName || "storeName"}
+                    </Typography>
+                  </div>
+                  {/* <div className="col-xs-1">
+                    <Typography
+                      align="left"
+                      key={canteens[k].id}
+                      style={{
+                        fontSize: 15
+                      }}
+                    >
+                      {oPrice}
+                    </Typography>
+                  </div> */}
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails key={canteens[k].id}>
                   {/* <div className={classes.wrapper}> */}
@@ -141,11 +157,15 @@ function CartList(props) {
             marginTop: 15
           }}
         >
-          <div className="col-xs-6">
-            <Typography variant="h4">Total:&nbsp;</Typography>
+          <div className="col-xs-3">
+            <Typography variant="h4" align="center">
+              Total:&nbsp;
+            </Typography>
           </div>
-          <div className="col-xs-6">
-            <Typography variant="h4">{orderPrice}</Typography>
+          <div className="col-xs-9">
+            <Typography variant="h4" align="center">
+              {orderPrice}
+            </Typography>
           </div>
         </div>
         <OrderConfirmationDialog total={total} orderId={orderId} data={data} />

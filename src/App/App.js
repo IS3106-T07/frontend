@@ -28,7 +28,7 @@ function ContentPage() {
             localStorage.getItem("store") !== null ? (
               <Redirect to={{ pathname: "/vendor/menu" }} />
             ) : (
-              <Redirect to={{ pathname: "/homepage" }} />
+              <Redirect to={{ pathname: "/homepage/canteen" }} />
             )
           }
         />

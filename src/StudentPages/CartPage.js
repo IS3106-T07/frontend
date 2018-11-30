@@ -22,6 +22,7 @@ class CartPage extends Component {
 
   render() {
     const { cart } = this.props;
+    console.log("CART");
     console.table(cart);
 
     return (
@@ -43,7 +44,7 @@ class CartPage extends Component {
             align="center"
             style={{
               color: "gray",
-              marginTop: 20
+              margin: 20
             }}
           >
             Seems a little empty around here

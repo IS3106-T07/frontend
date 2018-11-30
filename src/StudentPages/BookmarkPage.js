@@ -1,17 +1,19 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import * as React from 'react';
-import connect from 'react-redux/es/connect/connect';
-import Typography from '@material-ui/core/Typography/Typography';
-import BookmarkList from './BookmarkList';
-import { SET_CURRENT_PAGE } from '../App';
+import * as React from "react";
+import connect from "react-redux/es/connect/connect";
+import Typography from "@material-ui/core/Typography/Typography";
+import BookmarkList from "./BookmarkList";
+import { SET_CURRENT_PAGE } from "../App";
 
 class BookmarkPage extends React.Component {
   componentWillMount() {
     const { dispatch } = this.props;
-    this.setState({}, () => dispatch({
-      type: SET_CURRENT_PAGE,
-      page: 1,
-    }));
+    this.setState({}, () =>
+      dispatch({
+        type: SET_CURRENT_PAGE,
+        page: 1
+      })
+    );
   }
 
   render() {
@@ -20,11 +22,12 @@ class BookmarkPage extends React.Component {
         <Typography
           variant="h3"
           style={{
-            color: 'gray',
+            color: "gray",
             marginTop: 20,
-            marginLeft: '4vw',
+            marginLeft: "4vw"
           }}
-        >Bookmark
+        >
+          Bookmark
         </Typography>
         <BookmarkList />
       </div>
@@ -33,9 +36,12 @@ class BookmarkPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  bookmark: state.userProfile.bookmark,
+  bookmark: state.userProfile.bookmark
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookmarkPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BookmarkPage);

@@ -1,72 +1,73 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Home from '@material-ui/icons/Home';
-import Bookmark from '@material-ui/icons/Bookmark';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import Assignment from '@material-ui/icons/Assignment';
-import connect from 'react-redux/es/connect/connect';
-import { compose } from 'redux';
-import Badge from '@material-ui/core/Badge/Badge';
-import { history } from '../../_helpers/history';
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import Home from "@material-ui/icons/Home";
+import Bookmark from "@material-ui/icons/Bookmark";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import Assignment from "@material-ui/icons/Assignment";
+import connect from "react-redux/es/connect/connect";
+import { compose } from "redux";
+import Badge from "@material-ui/core/Badge/Badge";
+import { history } from "../../_helpers/history";
 
 const styles = {
   root: {
-    width: '100%',
-    backgroundColor: '#DAA520',
+    width: "100%",
+    backgroundColor: "#DAA520",
     height: 58,
     padding: 3,
-    overflow: 'hidden',
+    overflow: "hidden"
   },
   icon: {
-    fontSize: 25,
+    fontSize: 25
     // position: 'absolute',
     // top: 2,
   },
   selected: {
-    color: 'White !important',
+    color: "White !important"
     // position: 'relative',
   },
   label: {
     // position: 'absolute',
     // bottom: 0,
-    fontSize: '12px !important',
-  },
+    fontSize: "12px !important"
+  }
 };
 
 class BottomBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: -1,
+      value: -1
     };
   }
 
   componentWillMount() {
     const { page } = this.props;
     this.setState({
-      value: page,
+      value: page
     });
   }
 
   componentWillReceiveProps(nextProps) {
     const { page } = nextProps;
     this.setState({
-      value: page,
+      value: page
     });
   }
 
   getCartItems = () => {
     const { cart } = this.props;
     const canteens = {};
-    cart.map((c) => {
+    cart.map(c => {
       const { orderDishes } = c;
-      orderDishes.map((od) => {
-        const canteen = canteens[`${od.dish.store.canteen.id}||${od.dish.store.id}`];
+      orderDishes.map(od => {
+        const canteen =
+          canteens[`${od.dish.store.canteen.id}||${od.dish.store.id}`];
         if (canteen === undefined) {
           canteens[`${od.dish.store.canteen.id}||${od.dish.store.id}`] = {
-            orderDishes: [],
+            orderDishes: []
           };
         }
         canteens[
@@ -75,7 +76,8 @@ class BottomBar extends Component {
         canteens[
           `${od.dish.store.canteen.id}||${od.dish.store.id}`
         ].canteenName = od.dish.store.canteen.name;
-        canteens[`${od.dish.store.canteen.id}||${od.dish.store.id}`].storeName = od.dish.store.name;
+        canteens[`${od.dish.store.canteen.id}||${od.dish.store.id}`].storeName =
+          od.dish.store.name;
         return true;
       });
       return true;
@@ -84,9 +86,7 @@ class BottomBar extends Component {
   };
 
   render() {
-    const {
-      classes, bookmark, orders, cart,
-    } = this.props;
+    const { classes, bookmark, orders, cart } = this.props;
     const { value } = this.state;
     const cartItems = this.getCartItems();
     const handleChange = (event, val) => {
@@ -103,10 +103,10 @@ class BottomBar extends Component {
           label="Canteen"
           classes={{
             selected: classes.selected,
-            label: classes.label,
+            label: classes.label
           }}
           onClick={() => {
-            history.push('/homepage/canteen');
+            history.push("/homepage/canteen");
           }}
           icon={<Home className={classes.icon} />}
         />
@@ -114,47 +114,71 @@ class BottomBar extends Component {
           label="Bookmark"
           classes={{
             selected: classes.selected,
-            label: classes.label,
+            label: classes.label
           }}
           onClick={() => {
-            history.push('/homepage/bookmark');
+            history.push("/homepage/bookmark");
           }}
-          icon={(
-            <Badge className={classes.margin} badgeContent={bookmark.length} color="secondary" invisible={bookmark.length === 0}>
+          icon={
+            bookmark.length != 0 ? (
+              <Badge
+                className={classes.margin}
+                badgeContent={bookmark.length}
+                color="secondary"
+              >
+                <Bookmark className={classes.icon} />
+              </Badge>
+            ) : (
               <Bookmark className={classes.icon} />
-            </Badge>
-          )}
+            )
+          }
         />
         <BottomNavigationAction
           label="Cart"
           classes={{
             selected: classes.selected,
-            label: classes.label,
+            label: classes.label
           }}
           onClick={() => {
-            history.push('/homepage/cart');
+            history.push("/homepage/cart");
           }}
-          icon={(
-            <Badge className={classes.margin} badgeContent={cartItems.length} color="secondary" invisible={cartItems.length === 0}>
+          icon={
+            cartItems.length != 0 ? (
+              <Badge
+                className={classes.margin}
+                badgeContent={cartItems.length}
+                color="secondary"
+              >
+                <ShoppingCart className={classes.icon} />
+              </Badge>
+            ) : (
               <ShoppingCart className={classes.icon} />
-            </Badge>
-          )}
+            )
+          }
         />
 
         <BottomNavigationAction
           label="Orders"
           classes={{
             selected: classes.selected,
-            label: classes.label,
+            label: classes.label
           }}
           onClick={() => {
-            history.push('/homepage/trackOrder');
+            history.push("/homepage/trackOrder");
           }}
-          icon={(
-            <Badge className={classes.margin} badgeContent={orders.length} color="secondary" invisible={orders.length === 0}>
+          icon={
+            orders.length != 0 ? (
+              <Badge
+                className={classes.margin}
+                badgeContent={orders.length}
+                color="secondary"
+              >
+                <Assignment className={classes.icon} />
+              </Badge>
+            ) : (
               <Assignment className={classes.icon} />
-            </Badge>
-          )}
+            )
+          }
         />
       </BottomNavigation>
     );
@@ -165,10 +189,10 @@ const mapStateToProps = state => ({
   page: state.currentPage.page,
   bookmark: state.userProfile.bookmark,
   orders: state.userProfile.orders,
-  cart: state.userProfile.cart,
+  cart: state.userProfile.cart
 });
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps),
+  connect(mapStateToProps)
 )(BottomBar);

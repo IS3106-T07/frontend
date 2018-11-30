@@ -1,19 +1,19 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography/Typography';
-import withStyles from '@material-ui/core/es/styles/withStyles';
-import CanteenCard from './CanteenCard';
-import { canteenActions } from '../_actions';
-import { history } from '../_helpers/history';
-import { SET_CURRENT_PAGE } from '../App';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Typography from "@material-ui/core/Typography/Typography";
+import withStyles from "@material-ui/core/es/styles/withStyles";
+import CanteenCard from "./CanteenCard";
+import { canteenActions } from "../_actions";
+import { history } from "../_helpers/history";
+import { SET_CURRENT_PAGE } from "../App";
 
 const style = {
   wrapper: {
-    padding: '0 15px 15px 2vw',
-    boxSizing: 'border-box',
-    width: '100vw',
-  },
+    padding: "0 15px 15px calc(6vw - 15px)",
+    boxSizing: "border-box",
+    width: "100vw"
+  }
 };
 
 class CanteenPage extends Component {
@@ -24,18 +24,20 @@ class CanteenPage extends Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    const { userType } = JSON.parse(localStorage.getItem('user'));
-    this.setState({}, () => dispatch({
-      type: SET_CURRENT_PAGE,
-      page: userType === 'VENDOR' ? 1 : 0,
-    }));
+    const { userType } = JSON.parse(localStorage.getItem("user"));
+    this.setState({}, () =>
+      dispatch({
+        type: SET_CURRENT_PAGE,
+        page: userType === "VENDOR" ? 1 : 0
+      })
+    );
     dispatch(canteenActions.getAllCanteens());
   }
 
-  onCanteenClick = (canteenId) => {
+  onCanteenClick = canteenId => {
     // console.log('####clicked a canteen');
-    const { userType } = JSON.parse(localStorage.getItem('user'));
-    if (userType === 'VENDOR') {
+    const { userType } = JSON.parse(localStorage.getItem("user"));
+    if (userType === "VENDOR") {
       history.push(`/vendor/store/${canteenId}`);
     } else {
       history.push(`/homepage/store/${canteenId}`);
@@ -49,17 +51,17 @@ class CanteenPage extends Component {
         <Typography
           variant="h3"
           style={{
-            color: 'gray',
-            marginLeft: '2vw',
-            marginTop: 20,
+            color: "gray",
+            marginLeft: "2vw",
+            marginTop: 20
           }}
         >
           Canteen
         </Typography>
-        {canteens !== undefined
-          && canteens.map(c => (
+        {canteens !== undefined &&
+          canteens.map(c => (
             <div
-              className="col-xs-6 col-sm-4 col-md-3"
+              className="col-xs-6 col-sm-6 col-md-6"
               key={c.id}
               onClick={() => this.onCanteenClick(c.id)}
             >
@@ -72,12 +74,12 @@ class CanteenPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  canteens: state.canteens.canteens,
+  canteens: state.canteens.canteens
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withStyles(style)(CanteenPage));
